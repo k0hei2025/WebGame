@@ -1,24 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import { Route, Switch } from 'react-router-dom'
+import { Fragment } from 'react';
+
+import Home from '../src/component/Home';
+import Snake from '../src/component/Snake';
+import MatchBox from '../src/component/MatchBox';
+import SnakeGame from '../src/component/SnakeGame'
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <Fragment>
+      <Switch>
+
+        <Route path="/game1" component={SnakeGame} exact="true" />
+        <Route path="/snake" component={Snake} exact="true" />
+        <Route path="/matchBox" component={MatchBox} exact="true" />
+        <Route path="/" component={Home} exact="true" />
+
+      </Switch>
+    </Fragment>
   );
 }
 

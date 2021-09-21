@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&family=Orbitron:wght@500&family=Press+Start+2P&display=swap');
+/* 
+font-family: 'Gluten', cursive;
+font-family: 'Orbitron', sans-serif;
+font-family: 'Press Start 2P', cursive; */
+
+.container {
+               text-align: center;
+             font-family: 'Orbitron';
+               font-weight: bold;
+               font-size:34px;
+               
+}
+
+.img{
+  margin-left:40%
+}
+
+.cardGame {
+
+    text-align: center;
+         font-family: 'Orbitron';
+  display: flex;
+}
+
+.b{
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .container { 
+    font-size: 20px;
+  }
+  .img{
+    margin-left:20%;
+    font-size: 20px;
+  }
+  
+}
