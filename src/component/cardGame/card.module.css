@@ -1,0 +1,42 @@
+.card {
+
+                margin-left: 21%;
+                margin-right: 15%;
+                margin-top:3%;
+                
+                
+}
+
+.cardHide {
+               margin: 10px;
+              visibility: hidden;
+              
+         
+}
+
+.cardStruct {
+
+      /* animation-name: spin;
+  animation-duration: 400ms;
+  /* animation-iteration-count: infinite; */
+  /* animation-timing-function: linear;  */
+
+       /* transform:translate3d(0,100%,0); */
+     
+        background-color: aqua;
+      border-style: solid;
+                     border-top: 50px;
+               border-color: black;
+               margin-left: 1%;
+               margin-bottom: 1%;
+}
+
+
+
+
+.visiblity{
+         visibility: visible; 
+}
+.visble {
+      visibility: hidden;
+}

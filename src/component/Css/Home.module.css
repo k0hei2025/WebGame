@@ -28,6 +28,10 @@ font-family: 'Press Start 2P', cursive; */
   margin-left: 10px;
 }
 
+.parentContainer {
+  overflow-x: hidden;
+}
+
 @media (max-width: 768px) {
 
   .container { 
@@ -39,3 +43,4 @@ font-family: 'Press Start 2P', cursive; */
   }
   
 }
+

@@ -2,6 +2,8 @@ import React from 'react'
 import './SnakeGame.css'
 import GameOver from './SnakeGameOver.jsx'
 import AppleImage from '../image/apple.jpg'
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import {connect} from 'react-redux'
 
 import { Grid } from '@mui/material'
 
@@ -19,7 +21,7 @@ class SnakeGame extends React.Component {
                                              height: 0,
                                              blockWidth: 0,
                                              blockHeight: 0,
-                                             gameLoopTimeout: 50,
+                                             gameLoopTimeout: 100,
                                              timeoutId: 0,
                                              startSnakeSize: 0,
                                              snake: [],
@@ -32,6 +34,7 @@ class SnakeGame extends React.Component {
                                              score: 0,
                                              highScore: Number(localStorage.getItem('snakeHighScore')) || 0,
                                              newHighScore: false,
+
                               }
                }
 
@@ -62,6 +65,7 @@ class SnakeGame extends React.Component {
                               }
 
                               func();
+
 
 
                }
@@ -223,6 +227,7 @@ class SnakeGame extends React.Component {
                                              let highScore = this.state.highScore
                                              let newHighScore = this.state.newHighScore
                                              let gameLoopTimeout = this.state.gameLoopTimeout
+                                             
 
                                              // increase snake size
                                              snake.push(newTail)
@@ -386,6 +391,18 @@ class SnakeGame extends React.Component {
                               this.setState({ direction: newDirection })
                }
 
+               fullScreenHandler(){
+                   console.log("clicked")
+                          let fullS = document.getElementById('GameBoard');
+                      
+                                
+                               if (fullS.requestFullscreen){
+                                  fullS.requestFullscreen();
+                              }
+                          
+
+               }
+
                render() {
 
                               
@@ -413,16 +430,58 @@ class SnakeGame extends React.Component {
                                                                            style={{
                                                                                           width: this.state.width,
                                                                                           height: this.state.height,
-                                                                                          borderWidth: this.state.width / 50,
+                                                                                          
                                                                            }}>
+                                                                              <div onClick={this.fullScreenHandler}>  <FullscreenIcon/> </div>
+
+                                                                             <b> userName </b> : {this.props.userName}
+
                                                                            {this.state.snake.map((snakePart, index) => {
-                                                                                          return (
+                                                                                        
+                                                                                        
+                                                                                        if (index === 0){
+
+
+                                                                                            
+                                                                                        return (
                                                                                                          <div
                                                                                             key={index}
                                                                                className='Block'
+
+
+     
                                                                                                                         style={{
                                                                                                                                        width: this.state.blockWidth,
                                                                                                                                        height: this.state.blockHeight,
+                              
+        borderRadius:'.5rem',                                                                                                             
+                                                                                                                                       left: snakePart.Xpos,
+                                                                                                                                       top: snakePart.Ypos,
+                                                                                                                                       background: this.state.snakeColor,
+                                                                                                                        }}
+                                                                                                         />
+                                                                                        )
+                                                                                                                    }
+
+
+
+
+
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        return (
+                                                                                                         <div
+                                                                                            key={index}
+                                                                               className='Block'
+
+
+     
+                                                                                                                        style={{
+                                                                                                                                       width: this.state.blockWidth,
+                                                                                                                                       height: this.state.blockHeight,
+                              
+                                                                                                                                       
                                                                                                                                        left: snakePart.Xpos,
                                                                                                                                        top: snakePart.Ypos,
                                                                                                                                        background: this.state.snakeColor,
@@ -440,6 +499,16 @@ class SnakeGame extends React.Component {
                                     background: this.state.appleColor,
                                     }}
                                                                            />
+                                                    
+                                                    
+                                                   </Grid> 
+                                                    
+                                                    
+
+
+
+                                                    
+                                                    
                                                               <div id='Score' style={{ fontSize: this.state.width / 20 }}>
                                                                {this.state.playerScore.map((i)=>{
                                                                    
@@ -457,7 +526,7 @@ class SnakeGame extends React.Component {
     <Grid container spacing={2} id={i.id}>
                                                                                                                                               <Grid item md={3}></Grid>
                 <Grid item md={4}>
-            <p> Name : {i.name}</p>
+            <p  > Name : {i.name}</p>
  
 
                 </Grid>
@@ -489,11 +558,14 @@ class SnakeGame extends React.Component {
                                                                                        
                                                                            </div>
                                                             </Grid>
-                                             </Grid>
+                                            
                               )
                }
 }
 
+const mapStateToProps=(state)=>({
+   userName : state.name
+})
 
 
-export default SnakeGame
+export default connect(mapStateToProps)(SnakeGame)
