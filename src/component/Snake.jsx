@@ -16,6 +16,8 @@ export default function Snake() {
                const nameRef = useRef();
 
                const dispatch = useDispatch();
+               const [submit , setSubmit] = useState(false);
+               const [err , setEr] = useState(false);
 
                const nameStateOfStore = useSelector((state)=>
                  state.name
@@ -27,10 +29,21 @@ export default function Snake() {
                  
                               event.preventDefault();
                           
+                              if (nameRef.current.value !== ''){
+
+
 
                              dispatch(actionState.nameHandler({
                                               userName : nameRef.current.value
                              }))
+
+                             setSubmit(true);
+                             setEr(false);
+                              } else {
+                                setEr(true)
+                              }
+
+
                }
 
                return (
@@ -38,11 +51,17 @@ export default function Snake() {
                                              <Grid item md={12} xs={12} style={{textAlign: 'center' , marginTop:'14%'}}>
                                               <div>
                                              <img src={SnakeImg} height="250px" width="250px" alt="Snake" />
+
+                                              
+                                                 {submit ?  <p style={{color : 'green'}}> Submitted</p> : ""}
+                                                     {err ? <b style={{color : 'red'}}> Fill your name  </b> : ""}
                                                <form onSubmit={submitHandler}>
                                                               <input type="text" ref={nameRef} placeholder="Enter User-Name"/>
                                                               <Button color="primary" onClick={submitHandler} > Submit </Button>
+                                                       
 
                                                </form>
+                                                 
                                               </div>
 
                                              <Link to="/game1"> <h1  > Play Game </h1> </Link>

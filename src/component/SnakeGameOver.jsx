@@ -6,7 +6,7 @@ function GameOver(props) {
                
              const nameStore = useSelector((state)=>state.name);
  
-             console.log(nameStore)
+             console.log('namestore',nameStore)
              
                // eslint-disable-next-line react-hooks/exhaustive-deps
                useEffect(async() =>{
@@ -22,8 +22,9 @@ function GameOver(props) {
                               
                               const resData =  await data.json();
                
-                              console.log(resData)
-               },[])
+                              console.log('fdsfsdfds',resData)
+                            
+               },[nameStore])
                
                
 

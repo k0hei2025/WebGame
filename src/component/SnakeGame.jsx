@@ -16,6 +16,7 @@ class SnakeGame extends React.Component {
                               this.state = {
                                              max : 0
                                               ,
+                                              scoreApple : '',
                                              playerScore: [],
                                              width: 0,
                                              height: 0,
@@ -162,6 +163,9 @@ class SnakeGame extends React.Component {
                               apple.Xpos =
                                              Math.floor(Math.random() * ((width - blockWidth) / blockWidth + 1)) *
                                              blockWidth
+
+
+
                               apple.Ypos =
                                              Math.floor(Math.random() * ((height - blockHeight) / blockHeight + 1)) *
                                              blockHeight
@@ -228,6 +232,7 @@ class SnakeGame extends React.Component {
                                              let newHighScore = this.state.newHighScore
                                              let gameLoopTimeout = this.state.gameLoopTimeout
                                              
+                                             
 
                                              // increase snake size
                                              snake.push(newTail)
@@ -277,6 +282,7 @@ class SnakeGame extends React.Component {
                                              if (snake[0].Xpos === snake[i].Xpos && snake[0].Ypos === snake[i].Ypos)
                                                             this.setState({ isGameOver: true })
                               }
+
                }
 
                isAppleOnSnake(appleXpos, appleYpos) {
@@ -285,6 +291,7 @@ class SnakeGame extends React.Component {
                                              if (appleXpos === snake[i].Xpos && appleYpos === snake[i].Ypos)
                                                             return true
                               }
+
                               return false
                }
 
@@ -432,9 +439,13 @@ class SnakeGame extends React.Component {
                                                                                           height: this.state.height,
                                                                                           
                                                                            }}>
-                                                                              <div onClick={this.fullScreenHandler}>  <FullscreenIcon/> </div>
+                                                                              <div onClick={this.fullScreenHandler}>  <FullscreenIcon/> 
+                                                                              
+                                                                              </div>
 
+                                                                             
                                                                              <b> userName </b> : {this.props.userName}
+                                                                            <b> Score :</b>{this.state.score}
 
                                                                            {this.state.snake.map((snakePart, index) => {
                                                                                         
