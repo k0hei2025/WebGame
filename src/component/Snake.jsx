@@ -64,7 +64,7 @@ export default function Snake() {
                                                  
                                               </div>
 
-                                             <Link to="/game1"> <h1  > Play Game </h1> </Link>
+                                           {submit ? <Link to="/game1"  > <h1  > Play Game </h1> </Link> : <> </> }  
 </Grid>
                               </Grid>
                )

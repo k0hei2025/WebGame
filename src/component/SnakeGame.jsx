@@ -5,7 +5,7 @@ import AppleImage from '../image/apple.jpg'
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import {connect} from 'react-redux'
 
-import { Grid } from '@mui/material'
+import { Button, Grid, Link } from '@mui/material'
 
 class SnakeGame extends React.Component {
                constructor(props) {
@@ -14,8 +14,13 @@ class SnakeGame extends React.Component {
                               this.handleKeyDown = this.handleKeyDown.bind(this)
 
                               this.state = {
+                                            listScore : '',
+                                            pushed : false,
                                              max : 0
                                               ,
+                                              maxNumber : 0,
+                                              top3 : [],
+                                              others : [],
                                               scoreApple : '',
                                              playerScore: [],
                                              width: 0,
@@ -51,6 +56,8 @@ class SnakeGame extends React.Component {
                               const resData = await data.json();
 
                               const arrayContainerOfScore = [];
+                              let topNo = [];
+               
                               for (let i in resData){
                                              arrayContainerOfScore.push({
 
@@ -58,7 +65,23 @@ class SnakeGame extends React.Component {
                                              name : resData[i].name,
                                              score : resData[i].score,  
                                              })
+
+
+
+                                             if (resData[i].score > this.state.maxNumber){
+                                        
+                                                 if (this.state.top3.length < 3){
+                                                      topNo.push({
+                                                          name: resData[i].name,
+                                                         score : resData[i].score})
+                                                                 {this.setState({maxNumber : resData[i].score})}
+                                                 {this.setState({ top3 : topNo }) }
+                                                 }
+                                               
+                                             }
                               }
+
+                              console.log(`top`,this.state.top3)
                               this.setState({playerScore : arrayContainerOfScore})
 
                               console.log(this.state.playerScore)
@@ -67,9 +90,16 @@ class SnakeGame extends React.Component {
 
                               func();
 
+                             
+
+
 
 
                }
+
+               
+
+
 
                initGame() {
                               // Game size initialization
@@ -410,11 +440,34 @@ class SnakeGame extends React.Component {
 
                }
 
+                  pushHandler(){
+                                this.setState({pushed: true}); 
+                            this.setState({listScore : this.state.playerScore((u)=>{
+                                  
+                                  return (<div id={u}> 
+
+                                       <div>
+                                           Name  : {u.name}
+                                       </div>
+
+                                       <div>
+                                           Score :   {u.score}
+                                       </div>
+
+
+                                    </div> )
+                                }) })    
+                               
+                              console.log(this.state.pushed);    
+                              }
+
+                            
+
                render() {
 
-                              
+                               console.log(`top`,this.state.top3)  
                              
-
+                           
 
 
                               // Game over
@@ -429,6 +482,8 @@ class SnakeGame extends React.Component {
                                                             />
                                              )
                               }
+
+
 
                               return (
                                              <Grid container spacing={2}>
@@ -520,54 +575,59 @@ class SnakeGame extends React.Component {
 
                                                     
                                                     
-                                                              <div id='Score' style={{ fontSize: this.state.width / 20 }}>
-                                                               {this.state.playerScore.map((i)=>{
-                                                                   
+                                                              <Grid container spacing={2}id='Score' style={{ marginLeft:"35px", marginTop:"10px", fontSize: "20px" }}>
+                                                <b> TOP 3 SCORE </b> 
+                                                             {this.state.top3.map((i)=>{
+                                                  
+                                                  return ( <Grid container spacing={2} id={i}>
+                                                       
+                                                                 <>
+                                                                    <Grid item md={4} id={i}>
+                                                                         Name : {i.name}
+                                                                    </Grid>
 
-                             if (i.score > this.state.max ){
-                         this.setState({max : i.score})
-                                                                                                               console.log( 'max Value' ,  this.state.max)
-               
-                                                                   console.log( 'i score' , i.score)
-
-
-                                                   console.log('if condition called')
-
-     return (
-    <Grid container spacing={2} id={i.id}>
-                                                                                                                                              <Grid item md={3}></Grid>
-                <Grid item md={4}>
-            <p  > Name : {i.name}</p>
+                                                                         <Grid item md={4} id={i}>
+                                                                         Score : {i.score}
+                                                                        </Grid>
+                                                                        </>
  
+                                                        </Grid>
+                                                  )
+                                                          })}  
+                                                 
+                                                                           </Grid>
 
-                </Grid>
-                                <Grid item md={5}>
-                                               
-                                                                                          <h1> High Score</h1>
-                                                                                    <b> {i.score} </b>
-                                               </Grid>                                                                                                              
-                                                                                            </Grid>
-     )
-                                                                                                    }
-                                                                                                    else {
-                                                                                                                    
-                                                                                                                 
-                                                                                                            return (       <Grid container spacing={2}>
-                                                                                                                                   <Grid item md={3}> </Grid>
-                                                                                                                 <Grid item md={4}>
-            <p> Name : {i.name}</p>
- 
+                                                             <div>
+                                                                <Button style={{marginLeft : '15px'}} onClick={()=>{
 
-                </Grid>
+                                                                    this.setState({pushed : !this.state.pushed});
 
-           <p> Score : {i.score} </p>
+                                        
+                                                            this.setState({listScore :
+                                                            this.state.playerScore.map((u)=>{
+                                  
+                                  return (<Grid style={{textAlign: 'center' , margin:"5px"}} container spacing={2} id={u}> 
 
-                </Grid>       
-                                                                                                            )
-                                                                                                    }
-                                                                                     })}
-                                                                                       
-                                                                           </div>
+                                       <Grid item md={6}>
+                                           <b>Name</b>  : {u.name}
+                                       </Grid>
+
+                                       <Grid item md={6}>
+                                          <b> Score </b>:   {u.score}
+                                       </Grid>
+
+
+                                    </Grid> )
+                                })   
+                            
+                                                            })          }}
+                                                              > { this.state.pushed ? <p> Hide all PLayers score </p>  :  <p> See all player Score </p> } </Button> 
+
+                                                                
+                                                             </div>
+                                                              
+                                                            { this.state.pushed  ?  this.state.listScore : ""}
+
                                                             </Grid>
                                             
                               )
