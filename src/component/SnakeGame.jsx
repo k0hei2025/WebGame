@@ -14,6 +14,7 @@ class SnakeGame extends React.Component {
                               this.handleKeyDown = this.handleKeyDown.bind(this)
 
                               this.state = {
+                                            food : 'mango',
                                             listScore : '',
                                             pushed : false,
                                              max : 0
@@ -49,7 +50,7 @@ class SnakeGame extends React.Component {
                               window.addEventListener('keydown', this.handleKeyDown)
                               this.gameLoop()
 
-                           const func =   async()=>{
+                           const func = async()=>{
                               
                               const data = await fetch('https://mygame-5fcfd-default-rtdb.firebaseio.com/game.json')
                               
@@ -199,6 +200,9 @@ class SnakeGame extends React.Component {
                               apple.Ypos =
                                              Math.floor(Math.random() * ((height - blockHeight) / blockHeight + 1)) *
                                              blockHeight
+
+
+
                               while (this.isAppleOnSnake(apple.Xpos, apple.Ypos)) {
                                              apple.Xpos =
                                                             Math.floor(Math.random() * ((width - blockWidth) / blockWidth + 1)) *
@@ -206,9 +210,12 @@ class SnakeGame extends React.Component {
                                              apple.Ypos =
                                                             Math.floor(Math.random() * ((height - blockHeight) / blockHeight + 1)) *
                                                             blockHeight
+
+                                                    
                               }
 
                               this.setState({
+                                  food : this.FoodBox(),
                                              snake,
                                              apple,
                                              direction: 'right',
@@ -220,12 +227,29 @@ class SnakeGame extends React.Component {
                                              score: 0,
                                              newHighScore: false,
                               })
+
                }
+
+               
+
+               FoodBox(){
+                    let foodBox = [ "Fruit" , "milk" , "Salad" , "Pizza" , "Fries" , "vegetables" , "IceCream" , "coke" , "Juice"];
+
+                    let randomNo = Math.floor(Math.random() * foodBox.length);
+                    this.setState({food : foodBox[randomNo]})
+                    console.log(this.state.food)
+              //      let fod = foodBox[randomNo]
+                    // console.log(fod)
+                    // return fod
+               }
+
+               
 
                getRandomColor() {
                               let hexa = '0123456789ABCDEF'
                               let color = '#'
                               for (let i = 0; i < 6; i++) color += hexa[Math.floor(Math.random() * 16)]
+                              console.log('getRandomColor')
                               return color
                }
 
@@ -266,6 +290,7 @@ class SnakeGame extends React.Component {
 
                                              // increase snake size
                                              snake.push(newTail)
+                                             this.FoodBox();
 
                                              // create another apple
                                              apple.Xpos =
@@ -431,7 +456,7 @@ class SnakeGame extends React.Component {
                fullScreenHandler(){
                    console.log("clicked")
                           let fullS = document.getElementById('GameBoard');
-                      
+                          document.getElementById('fodo').style.color = 'white'
                                 
                                if (fullS.requestFullscreen){
                                   fullS.requestFullscreen();
@@ -465,7 +490,8 @@ class SnakeGame extends React.Component {
 
                render() {
 
-                               console.log(`top`,this.state.top3)  
+                            //    console.log(`top`,this.state.top3)  
+                            //    console.log(`this.state.food`, this.state.food)
                              
                            
 
@@ -564,7 +590,7 @@ class SnakeGame extends React.Component {
                                    top: this.state.apple.Ypos,
                                     background: this.state.appleColor,
                                     }}
-                                                                           />
+                                                                           > <b id='fodo' style={{marginLeft:"40px"}}> {this.state.food} </b> </div>
                                                     
                                                     
                                                    </Grid> 
